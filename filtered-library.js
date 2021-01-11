@@ -171,8 +171,10 @@ $(function() {
             if ($(currentFilter).hasClass(parentGroup)) {
                 if (text == 'all') {
                     $(currentFilter).find('h4').remove();
+                    $(currentFilter).addClass('no-selection');
                 } else if ($(self).hasClass('active')) {
                     $('<h4 class="' + klass + '">' + text + '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>').appendTo(currentFilter);
+                    $(currentFilter).removeClass('no-selection');
                 } else {
                     var elem = $(currentFilter).find('.' + klass);
                     $(elem).remove();
@@ -351,30 +353,28 @@ function makinFilters() {
         }
     });
 
-    //I got this far before I had a breakdown
     handleSelection();
 
     function handleSelection() {
-    	$('.filter-button-group').each(function() {
-    		var selectionClassList = $(this).attr('class'),
-    		selectionClassList = selectionClassList.split(' ');
-    		selectionClass = selectionClassList[0];
-    		selectionClass = selectionClass
-    		.replace(/\s+/g, '-')
-    		.replace(/&/g, 'and')
-    		.replace(/[^a-zA-Z0-9\-]+/g, '')
-    		.toLowerCase();
-    		headerText = $(this).find('h2').text()
+        $('.filter-button-group').each(function() {
+            var selectionClassList = $(this).attr('class'),
+                selectionClassList = selectionClassList.split(' ');
+            selectionClass = selectionClassList[0];
+            selectionClass = selectionClass
+                .replace(/\s+/g, '-')
+                .replace(/&/g, 'and')
+                .replace(/[^a-zA-Z0-9\-]+/g, '')
+                .toLowerCase();
+            headerText = $(this).find('h2').text()
 
-    		var header = '<div class="' + selectionClass +'"><h2>' + headerText + '</h2></div>'
-    		$(header).appendTo('.selected-filters .HtmlContent')
+            var header = '<div class="' + selectionClass + ' no-selection' + '"><h2>' + headerText + '</h2></div>'
+            $(header).appendTo('.selected-filters .HtmlContent')
 
         });
-        
+
         // add 'Clear All' button
 
         var clearAllButton = '<button type="button" onclick="clearFilters();">Clear All</button>';
-
         $(clearAllButton).appendTo('.selected-filters .HtmlContent');
 
     }
@@ -389,17 +389,22 @@ function makinFilters() {
 
 function clearFilters() {
     $('.selected-filters h4').remove();
-    $('.filter-button-group').each(function () {
+    $('.filter-button-group').each(function() {
         var self = $(this),
             selectors = $(self).find('checkbox-filter input');
 
-        $(selectors).each(function () {
+        $(selectors).each(function() {
             var selector = $(this);
             $(selector).removeClass('active');
             selector.checked = false;
             $(selector).parent().removeClass('is-active');
         });
     });
+
+    $('.selected-filters .HtmlContent > div').each(function() {
+        $(this).addClass('no-selection')
+    });
+
     $('.grid div[id*="ListViewContent"]').isotope({ filter: '*' });
     $('.filter-label').text('Filter By');
     $('.filter-content').removeClass('has-selection');
