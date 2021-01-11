@@ -163,6 +163,23 @@ $(function() {
         // set dropdown label text
         text = text.replace('-', ' ');
 
+        var klass = dataFilter.substring(1, dataFilter.length);
+
+        var selectedFilters = $('.selected-filters .HtmlContent div').toArray();
+        for (var i = 0; i < selectedFilters.length; i++) {
+            var currentFilter = selectedFilters[i];
+            if ($(currentFilter).hasClass(parentGroup)) {
+                if (text == 'all') {
+                    $(currentFilter).find('h4').remove();
+                } else if ($(self).hasClass('active')) {
+                    $('<h4 class="' + klass + '">' + text + '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>').appendTo(currentFilter);
+                } else {
+                    var elem = $(currentFilter).find('.' + klass);
+                    $(elem).remove();
+                }
+            }
+        }
+
         filterButtonGroup = $('.filter-button-group');
 
         $(filterButtonGroup).each(function(i) {
@@ -335,27 +352,32 @@ function makinFilters() {
     });
 
     //I got this far before I had a breakdown
-    // handleSelection();
+    handleSelection();
 
-    // function handleSelection() {
-    // 	$('.filter-button-group').each(function() {
-    // 		var selectionClassList = $(this).attr('class'),
-    // 		selectionClassList = selectionClassList.split(' ');
-    // 		selectionClass = selectionClassList[0];
-    // 		selectionClass = selectionClass
-    // 		.replace(/\s+/g, '-')
-    // 		.replace(/&/g, 'and')
-    // 		.replace(/[^a-zA-Z0-9\-]+/g, '')
-    // 		.toLowerCase();
-    // 		headerText = $(this).find('h2').text()
+    function handleSelection() {
+    	$('.filter-button-group').each(function() {
+    		var selectionClassList = $(this).attr('class'),
+    		selectionClassList = selectionClassList.split(' ');
+    		selectionClass = selectionClassList[0];
+    		selectionClass = selectionClass
+    		.replace(/\s+/g, '-')
+    		.replace(/&/g, 'and')
+    		.replace(/[^a-zA-Z0-9\-]+/g, '')
+    		.toLowerCase();
+    		headerText = $(this).find('h2').text()
 
-    // 		var header = '<div class="' + selectionClass +'"><h2>' + headerText + '</h2></div>'
-    // 		$(header).appendTo('.selected-filters .HtmlContent')
+    		var header = '<div class="' + selectionClass +'"><h2>' + headerText + '</h2></div>'
+    		$(header).appendTo('.selected-filters .HtmlContent')
 
-    // 	});
+        });
+        
+        // add 'Clear All' button
 
+        var clearAllButton = '<button type="button" onclick="clearFilters();">Clear All</button>';
 
-    // }
+        $(clearAllButton).appendTo('.selected-filters .HtmlContent');
+
+    }
 
 
     $('.filter-button-group').wrapAll('<div class="row "/>');
@@ -363,4 +385,36 @@ function makinFilters() {
     $('.filter-button-group .filter-content .multiple-select').prepend(
         '<li class="checkbox-filter"><input type="checkbox" id="all" data-filter="">Show All<span class="checkmark"></span></li>'
     );
+}
+
+function clearFilters() {
+    $('.selected-filters h4').remove();
+    $('.filter-button-group').each(function () {
+        var self = $(this),
+            selectors = $(self).find('checkbox-filter input');
+
+        $(selectors).each(function () {
+            var selector = $(this);
+            $(selector).removeClass('active');
+            selector.checked = false;
+            $(selector).parent().removeClass('is-active');
+        });
+    });
+    $('.grid div[id*="ListViewContent"]').isotope({ filter: '*' });
+    $('.filter-label').text('Filter By');
+    $('.filter-content').removeClass('has-selection');
+}
+
+function removeMe(elem) {
+    var parent = $(elem).closest('h4'),
+        parentClass = $(parent).attr('class');
+    var filterElem = $('input[data-filter=".' + parentClass + '"]');
+    $(filterElem).removeClass('active');
+    filterElem.checked = false;
+    $(parent).remove();
+
+    // do something so that it only removes the active class and changes the text back to Filter By/removes 'has-selection' if it's the last one in that list to be removed
+    $(filterElem).parent().removeClass('is-active');
+
+    // refactor so this + clear filters has less code repetition
 }
