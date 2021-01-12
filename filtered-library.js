@@ -396,6 +396,10 @@ function removeMe(elem) {
         $(filterLabelParent).text('Select filter options');
     }
 
+    if (!!($(parent).find('h4').html())) {
+        $(parent).addClass('no-selection');
+    }
+
     // update filters
 
     updateFilters();
