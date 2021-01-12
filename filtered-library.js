@@ -1,3 +1,5 @@
+var defaultText;
+
 $(function() {
     $('<div class="dropdown-group"><div class="HtmlContent"></div></div>').insertAfter('.filter-title');
     $('.filter-wrap, .dropdown-group').wrapAll('<div class="filter-wrap" />');
@@ -43,7 +45,6 @@ $(function() {
                 tag = tag.replace(/,/g, '');
                 tag = tag.replace(/[{()}]/g, '');
                 tag = tag.replace(/&/g, '');
-                // console.log("Tag: " + tag)
                 $(self).addClass(tag);
             }
         }
@@ -106,10 +107,6 @@ $(function() {
         itemSelector: '.library-list'
     });
 
-    var contentText = [];
-
-    // for(var i = 0; i < $('.filter-button-group').length; i++ ) {
-
     var groupFilterButtons = $('.filter-button-group');
 
     $(groupFilterButtons).each(function(i) {
@@ -118,8 +115,6 @@ $(function() {
         var filterButtonGroupEach = groupFilterButtons[i];
 
         firstFilterClass = filterButtonGroupEach.className.split(' ')[0];
-
-        // return firstFilterClass;
 
         w['arr_' + firstFilterClass] = [];
     });
@@ -132,94 +127,7 @@ $(function() {
         handleCheckboxClick(input);
     });
 
-    function handleCheckboxClick(self) {
-        var parent = $(self).parents('.filter-button-group'),
-            selectors = $(parent).find('.checkbox-filter input').toArray(),
-            parentGroup = $(parent).attr('class').split(/\s+/)[0],
-            label = $(parent).find('.filter-label'),
-            text = $(self).attr('id').toLowerCase(),
-            labelText,
-            defaultText = 'Filter by';
-
-        //toggle active class
-        $(self).toggleClass('active');
-        $(self).parent().toggleClass('is-active');
-
-        //check for show all
-        var dataFilter = $(self).attr('data-filter');
-        if (!dataFilter && $(self).hasClass('active')) {
-            for (var i = 1; i < selectors.length; i++) {
-                var checkbox = selectors[i];
-                $(checkbox).removeClass('active');
-                $(checkbox).parent().removeClass('is-active');
-                checkbox.checked = false;
-            }
-        } else {
-            $(selectors[0]).removeClass('active');
-            $($(selectors)[0]).parent().removeClass('is-active');
-            selectors[0].checked = false;
-        }
-
-        // set dropdown label text
-        text = text.replace('-', ' ');
-
-        var klass = dataFilter.substring(1, dataFilter.length);
-
-        var selectedFilters = $('.selected-filters .HtmlContent div').toArray();
-        for (var i = 0; i < selectedFilters.length; i++) {
-            var currentFilter = selectedFilters[i];
-            if ($(currentFilter).hasClass(parentGroup)) {
-                if (text == 'all') {
-                    $(currentFilter).find('h4').remove();
-                    $(currentFilter).addClass('no-selection');
-                } else if ($(self).hasClass('active')) {
-                    $('<h4 class="' + klass + '">' + text + '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>').appendTo(currentFilter);
-                    $(currentFilter).removeClass('no-selection');
-                } else {
-                    var elem = $(currentFilter).find('.' + klass);
-                    $(elem).remove();
-                }
-            }
-        }
-
-        filterButtonGroup = $('.filter-button-group');
-
-        $(filterButtonGroup).each(function(i) {
-            var filterButtonFirstElement = filterButtonGroup[i];
-            var elementFirstClass = filterButtonFirstElement.className.split(' ')[0];
-            var classConversion = elementFirstClass.replace(/-/g, ' ');
-
-            switch (parentGroup) {
-                case elementFirstClass:
-                    if (!dataFilter) {
-                        w['arr_' + elementFirstClass] = [];
-                    }
-                    labelText = w['arr_' + elementFirstClass];
-                    defaultText += ' ' + classConversion;
-                    break;
-            }
-        });
-
-        if ($(self).hasClass('active') && !!text && text !== 'all') {
-            labelText.push(text);
-        } else {
-            var index = labelText.indexOf(text);
-            if (index !== -1) {
-                labelText.splice(index, 1);
-            }
-        }
-
-        if (labelText.length) {
-            labelText = labelText.join(', ');
-            $(label).text(labelText);
-            $(parent).find('.filter-content').addClass('has-selection');
-        } else {
-            $(label).text(defaultText);
-            $(parent).find('.filter-content').removeClass('has-selection');
-        }
-
-        updateFilters();
-    }
+    
 
     $(document).click(function(e) {
         var target = e.target,
@@ -236,6 +144,80 @@ $(function() {
     });
 });
 
+function handleCheckboxClick(self) {
+    var parent = $(self).parents('.filter-button-group'),
+        selectors = $(parent).find('.checkbox-filter input').toArray(),
+        parentGroup = $(parent).attr('class').split(/\s+/)[0],
+        label = $(parent).find('.filter-label'),
+        text = $(self).attr('id').toLowerCase(),
+        labelText;
+
+    defaultText = 'Select filter options';
+
+    //toggle active class
+    $(self).toggleClass('active');
+    $(self).parent().toggleClass('is-active');
+
+    //check for show all
+    var dataFilter = $(self).attr('data-filter');
+    if (!dataFilter && $(self).hasClass('active')) {
+        for (var i = 1; i < selectors.length; i++) {
+            var checkbox = selectors[i];
+            $(checkbox).removeClass('active');
+            $(checkbox).parent().removeClass('is-active');
+            checkbox.checked = false;
+        }
+    } else {
+        $(selectors[0]).removeClass('active');
+        $($(selectors)[0]).parent().removeClass('is-active');
+        selectors[0].checked = false;
+    }
+
+    // set dropdown label text
+    text = text.replace('-', ' ');
+
+    var klass = dataFilter.substring(1, dataFilter.length);
+
+    var selectedFilters = $('.selected-filters .HtmlContent div').toArray();
+    for (var i = 0; i < selectedFilters.length; i++) {
+        var currentFilter = selectedFilters[i];
+        if ($(currentFilter).hasClass(parentGroup)) {
+            if (text == 'all') {
+                $(currentFilter).find('h4').remove();
+                $(currentFilter).addClass('no-selection');
+            } else if ($(self).hasClass('active')) {
+                $('<h4 class="' + klass + '">' + text + '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>').appendTo(currentFilter);
+                $(currentFilter).removeClass('no-selection');
+            } else {
+                var elem = $(currentFilter).find('.' + klass);
+                $(elem).remove();
+            }
+        }
+    }
+
+    filterButtonGroup = $('.filter-button-group');
+
+    $(filterButtonGroup).each(function(i) {
+        var filterButtonFirstElement = filterButtonGroup[i];
+        var elementFirstClass = filterButtonFirstElement.className.split(' ')[0];
+        var classConversion = elementFirstClass.replace(/-/g, ' ');
+
+        switch (parentGroup) {
+            case elementFirstClass:
+                if (!dataFilter) {
+                    w['arr_' + elementFirstClass] = [];
+                }
+                labelText = w['arr_' + elementFirstClass];
+                // defaultText += ' ' + classConversion;
+                break;
+        }
+    });
+
+    handleLabelText(labelText, self, label, parent, text);
+
+    updateFilters();
+}
+
 function updateSelection(val, klass, filters) {
     var checkboxes = $(val).find('.active').toArray(),
         localFilters = [];
@@ -246,23 +228,6 @@ function updateSelection(val, klass, filters) {
     });
 
     filters[klass] = localFilters;
-}
-
-function updateFilters() {
-    var groups = $('.filter-button-group').toArray(),
-        filters = {};
-
-    $(groups).each(function() {
-        var self = $(this),
-            klass = $(self).attr('class').split(/\s+/)[0],
-            selector = '.' + klass;
-
-        updateSelection(selector, klass, filters);
-    });
-
-    var filterVal = concatFilters(filters);
-
-    $('.grid div[id*="ListViewContent"]').isotope({ filter: filterVal });
 }
 
 function concatFilters(obj) {
@@ -331,7 +296,7 @@ function makinFilters() {
                 categoryTypeClassConversion +
                 ' filter-button-group "><h2>' +
                 category.categoryType +
-                '</h2><span class="filter-label">Filter by</span><div class="filter-content"><ul class="multiple-select"></ul></div></div>'
+                '</h2><span class="filter-label">Select filter options</span><div class="filter-content"><ul class="multiple-select"></ul></div></div>'
             );
         }
 
@@ -389,16 +354,13 @@ function makinFilters() {
 
 function clearFilters() {
     $('.selected-filters h4').remove();
-    $('.filter-button-group').each(function() {
-        var self = $(this),
-            selectors = $(self).find('checkbox-filter input');
+    var selectors = $('.checkbox-filter input');
 
-        $(selectors).each(function() {
-            var selector = $(this);
-            $(selector).removeClass('active');
-            selector.checked = false;
-            $(selector).parent().removeClass('is-active');
-        });
+    $(selectors).each(function() {
+        var selector = $(this);
+        $(selector).removeClass('active');
+        selector.checked = false;
+        $(selector).parent().removeClass('is-active');
     });
 
     $('.selected-filters .HtmlContent > div').each(function() {
@@ -406,7 +368,7 @@ function clearFilters() {
     });
 
     $('.grid div[id*="ListViewContent"]').isotope({ filter: '*' });
-    $('.filter-label').text('Filter By');
+    $('.filter-label').text('Select filter options');
     $('.filter-content').removeClass('has-selection');
 }
 
@@ -417,9 +379,62 @@ function removeMe(elem) {
     $(filterElem).removeClass('active');
     filterElem.checked = false;
     $(parent).remove();
-
-    // do something so that it only removes the active class and changes the text back to Filter By/removes 'has-selection' if it's the last one in that list to be removed
     $(filterElem).parent().removeClass('is-active');
+    var filterAncestor = $(filterElem).closest('.filter-button-group'),
+        filterLabel = $(filterAncestor).find('.filter-label'),
+        labelText = $(filterLabel).text().split(', ');
 
-    // refactor so this + clear filters has less code repetition
+    handleLabelText(labelText, filterElem, filterLabel, filterAncestor, $(parent).text());
+
+    // change text to 'Select filter options' and remove 'has-selection' class when no children are selected
+    var filterContentParent = $(filterElem).closest('.filter-content'),
+        filterLabelParent = $(filterAncestor).find('.filter-label');
+        parentHasSelection = !!($(filterContentParent).find('.is-active').html());
+
+    if (!parentHasSelection) {
+        $(filterContentParent).removeClass('has-selection');
+        $(filterLabelParent).text('Select filter options');
+    }
+
+    // update filters
+
+    updateFilters();
+}
+
+function handleLabelText(labelText, elem, label, parent, text) {
+
+    if ($(elem).hasClass('active') && !!text && text !== 'all') {
+        labelText.push(text);
+    } else {
+        var index = labelText.indexOf(text);
+        if (index !== -1) {
+            labelText.splice(index, 1);
+        }
+    }
+
+    if (labelText.length) {
+        labelText = labelText.join(', ');
+        $(label).text(labelText);
+        $(parent).find('.filter-content').addClass('has-selection');
+    } else {
+        $(label).text(defaultText);
+        $(parent).find('.filter-content').removeClass('has-selection');
+    }
+}
+
+function updateFilters() {
+    var groups = $('.filter-button-group').toArray(),
+        filters = {};
+
+    $(groups).each(function() {
+        var self = $(this),
+            klass = $(self).attr('class').split(/\s+/)[0],
+            selector = '.' + klass;
+
+        updateSelection(selector, klass, filters);
+    });
+
+    var filterVal = concatFilters(filters);
+
+    $('.grid div[id*="ListViewContent"]').isotope({ filter: filterVal });
 }
