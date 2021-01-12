@@ -353,9 +353,12 @@ function makinFilters() {
 }
 
 function clearFilters() {
+    
+    // remove filter button
     $('.selected-filters h4').remove();
     var selectors = $('.checkbox-filter input');
 
+    // remove active/checked status from filter checkboxes
     $(selectors).each(function() {
         var selector = $(this);
         $(selector).removeClass('active');
@@ -367,12 +370,15 @@ function clearFilters() {
         $(this).addClass('no-selection')
     });
 
+    // show all items in the grid and reset filter dropdowns
     $('.grid div[id*="ListViewContent"]').isotope({ filter: '*' });
     $('.filter-label').text('Select filter options');
     $('.filter-content').removeClass('has-selection');
 }
 
 function removeMe(elem) {
+
+    // remove active/checked status from filter checkbox and remove the filter button
     var parent = $(elem).closest('h4'),
         parentClass = $(parent).attr('class');
     var filterElem = $('input[data-filter=".' + parentClass + '"]');
@@ -380,9 +386,14 @@ function removeMe(elem) {
     filterElem.checked = false;
     $(parent).remove();
     $(filterElem).parent().removeClass('is-active');
+
+    // remove filter label text from array
     var filterAncestor = $(filterElem).closest('.filter-button-group'),
         filterLabel = $(filterAncestor).find('.filter-label'),
-        labelText = $(filterLabel).text().split(', ');
+        labelText = $(filterLabel).text().split(', '),
+        filterClass = $(filterAncestor).attr('class').split(' ')[0];
+
+    w['arr_' + filterClass].splice(w['arr_' + filterClass].indexOf($(parent).text()), 1);
 
     handleLabelText(labelText, filterElem, filterLabel, filterAncestor, $(parent).text());
 
@@ -407,13 +418,14 @@ function removeMe(elem) {
 
 function handleLabelText(labelText, elem, label, parent, text) {
 
+    var index = labelText.indexOf(text);
+
+    // add label text if the checkbox is active
     if ($(elem).hasClass('active') && !!text && text !== 'all') {
         labelText.push(text);
-    } else {
-        var index = labelText.indexOf(text);
-        if (index !== -1) {
-            labelText.splice(index, 1);
-        }
+    } else if (index !== -1) {
+        // remove text otherwise if present
+        labelText.splice(index, 1);
     }
 
     if (labelText.length) {
