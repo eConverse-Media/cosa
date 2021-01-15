@@ -1,5 +1,19 @@
 /* MCS edits */
 
+.interior h5 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: #333;
+    line-height: 27px;
+    position: relative;
+}
+.interior h5:after {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid #f4f4f4; 
+    margin: 25px 0 30px 0;
+}
 
 /*** tables ****/
 
@@ -546,7 +560,7 @@ h2,
     position: relative;
 }
 
-.interior h2 {
+.interior #MainCopy_ContentWrapper h2 {
     color: #212d6a;
 }
 
@@ -657,6 +671,7 @@ input:focus {
     margin: 5px;
 }
 
+.library-link a,
 .make-buttons em a {
     display: inline-block;
     font-size: 14px;
@@ -671,9 +686,22 @@ input:focus {
     text-decoration: none;
 }
 
+.library-link a {
+    background: #212d6a;
+    border-color: #212d6a;
+    margin-left: 167px;
+    margin-top: 10px;
+}
+
+.library-link a:hover,
+.library-link a:focus {
+    border-color: transparent;
+    background-color: #1e70bc;
+}
+
 .make-buttons em a:hover {
     background: #fff;
-    color: #d02030;
+    color: #b21c29;
 }
 
 .interior .make-buttons em a {
@@ -799,6 +827,7 @@ div[id*='More'] a:hover::after {
 
 /* primary button */
 
+a[id*="lnkDownloadDoc"],
 .btn-primary,
 .ideation-home .btn-success,
 .community-radio .btn-group .btn-primary.dropdown-toggle,
@@ -825,6 +854,8 @@ fieldset[disabled] .btn-primary.active,
     border-color: #212d6a;
 }
 
+a[id*="lnkDownloadDoc"]:hover,
+a[id*="lnkDownloadDoc"]:focus,
 .btn-primary:hover,
 .btn-primary:focus,
 .ideation-home .btn-success:hover,
@@ -2848,10 +2879,16 @@ td.ProfilePic>a>img {
     padding-bottom: 30px;
 }
 
-.library-content .selector-wrap h2,
-.library-content .selector-wrap p,
-.library-content .selected-filters h2 {
+.interior #MainCopy_ContentWrapper filter-button-group h2,
+.interior #MainCopy_ContentWrapper .library-content .selector-wrap h2,
+.interior #MainCopy_ContentWrapper .library-content .selector-wrap p,
+.interior #MainCopy_ContentWrapper .library-content .selected-filters h2 {
     color: #1f271b;
+}
+
+.library-content .selector-wrap h2 {
+    font-size: 18px;
+    line-height: 25px;
 }
 
 .library-content .selector-wrap ContentItemHtml:not(filter-selection) p:last-child {
@@ -2923,6 +2960,7 @@ td.ProfilePic>a>img {
 .library-content .selected-filters .HtmlContent {
     background: #f7f7f7;
     padding: 20px;
+    padding-bottom: 60px;
 }
 
 
@@ -3055,8 +3093,15 @@ td.ProfilePic>a>img {
     margin: 15px;
     border-radius: 0;
     border: 1px solid #e9e9e9;
-    min-height: 300px;
+    min-height: 240px;
     overflow: hidden;
+}
+
+.filtered-library.grid div[id*="NameBlock"]>div:nth-child(4) {
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 60px;
 }
 
 .filtered-library .library-list h3 a {
@@ -3079,13 +3124,6 @@ td.ProfilePic>a>img {
 .filtered-library .tags-container .glyphicon-tags {
     display: none;
 }
-
-.filtered-library.grid div[id*="NameBlock"]>div:nth-child(4) {
-    height: 120px;
-    overflow: hidden;
-    position: relative;
-}
-
 
 /* .filtered-library.grid div[id*="NameBlock"] > div:nth-child(4)::after {
 	content: '';
@@ -3170,7 +3208,7 @@ a.user-content-hashtag {
     letter-spacing: 0.5px;
     text-transform: uppercase;
     color: #343f7a;
-    margin: -5px 0;
+    margin: 2.5px;
 }
 
 a.user-content-hashtag {
@@ -3181,4 +3219,55 @@ a.user-content-hashtag {
 .hltags .ui-state-default a:link,
 .hltags .ui-state-default a:visited {
     color: #343f7a;
+}
+
+.selected-filters h4 {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 20px;
+    color: #656565;
+    padding: 7px 14px;
+    margin-top: 0;
+    text-transform: capitalize;
+}
+
+.selected-filters .HtmlContent>button {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 1px;
+    text-decoration-line: underline;
+    text-transform: uppercase;
+    color: #273469;
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 35px;
+}
+
+.selected-filters .HtmlContent h4 button {
+    background: transparent;
+    border: transparent;
+    float: right;
+}
+
+.selected-filters .HtmlContent h4 button i {
+    font-size: 14px;
+    line-height: 16px;
+    color: #666666;
+}
+
+.selected-filters .HtmlContent div h2 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    color: #1f271b;
+}
+
+.selected-filters .no-selection {
+    display: none;
 }

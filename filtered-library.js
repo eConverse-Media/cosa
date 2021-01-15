@@ -45,6 +45,8 @@ $(function() {
                 tag = tag.replace(/,/g, '');
                 tag = tag.replace(/[{()}]/g, '');
                 tag = tag.replace(/&/g, '');
+                tag = tag.replace(/\//g, '');
+                // console.log(tag);
                 $(self).addClass(tag);
             }
         }
@@ -127,8 +129,6 @@ $(function() {
         handleCheckboxClick(input);
     });
 
-    
-
     $(document).click(function(e) {
         var target = e.target,
             selector;
@@ -186,7 +186,13 @@ function handleCheckboxClick(self) {
                 $(currentFilter).find('h4').remove();
                 $(currentFilter).addClass('no-selection');
             } else if ($(self).hasClass('active')) {
-                $('<h4 class="' + klass + '">' + text + '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>').appendTo(currentFilter);
+                $(
+                    '<h4 class="' +
+                    klass +
+                    '">' +
+                    text +
+                    '<button type="button" onclick="removeMe(this);"><i class="cosa cosa-trash-alt"></i></button></h4>'
+                ).appendTo(currentFilter);
                 $(currentFilter).removeClass('no-selection');
             } else {
                 var elem = $(currentFilter).find('.' + klass);
@@ -285,6 +291,7 @@ function makinFilters() {
         var categoryTagClassConversion = category.tag;
         categoryTagClassConversion = categoryTagClassConversion
             .replace(/\s+/g, '-')
+            .replace('/', '')
             .replace(/[^a-zA-Z0-9\-]+/g, '')
             .toLowerCase();
 
@@ -316,6 +323,51 @@ function makinFilters() {
                 );
             }
         }
+
+        $('.filter-button-group').each(function() {
+            var self = $(this),
+                multiselect = $(self).find('.multiple-select'),
+                listItems = multiselect.children('li:not(:contains("Show All"))').get();
+            listItems.sort(sortAlphaNum);
+            $.each(listItems, function(idx, itm) {
+                multiselect.append(itm);
+            });
+        });
+
+        function sortAlphaNum(a, b) {
+            console.log('running');
+
+            var aText = $(a).text(),
+                bText = $(b).text(),
+                regexAlpha = /[a-zA-Z*]/g,
+                regexNum = /[0-9*]/g;
+
+            aText = aText.toString();
+            aText = aText.toLowerCase();
+
+            bText = bText.toString();
+            bText = bText.toLowerCase();
+
+            // remove numbers
+            var aTextAlpha = aText.replace(regexNum, ''),
+                bTextAlpha = bText.replace(regexNum, '');
+
+            // remove extra words
+            var aTextAlphaFirstWord = aTextAlpha.split(' ')[0],
+                bTextAlphaFirstWord = bTextAlpha.split(' ')[0];
+
+            // remove letters
+            var aTextNum = parseInt(aText.replace(regexAlpha, '')),
+                bTextNum = parseInt(bText.replace(regexAlpha, ''));
+
+            // alphabetically sorting words
+            if (!(aTextAlphaFirstWord === bTextAlphaFirstWord)) {
+                return aTextAlpha > bTextAlpha ? 1 : -1;
+            } else {
+                // sorting alphanumeric values
+                return aTextNum > bTextNum ? 1 : -1;
+            }
+        }
     });
 
     handleSelection();
@@ -330,20 +382,17 @@ function makinFilters() {
                 .replace(/&/g, 'and')
                 .replace(/[^a-zA-Z0-9\-]+/g, '')
                 .toLowerCase();
-            headerText = $(this).find('h2').text()
+            headerText = $(this).find('h2').text();
 
-            var header = '<div class="' + selectionClass + ' no-selection' + '"><h2>' + headerText + '</h2></div>'
-            $(header).appendTo('.selected-filters .HtmlContent')
-
+            var header = '<div class="' + selectionClass + ' no-selection' + '"><h2>' + headerText + '</h2></div>';
+            $(header).appendTo('.selected-filters .HtmlContent');
         });
 
         // add 'Clear All' button
 
         var clearAllButton = '<button type="button" onclick="clearFilters();">Clear All</button>';
         $(clearAllButton).appendTo('.selected-filters .HtmlContent');
-
     }
-
 
     $('.filter-button-group').wrapAll('<div class="row "/>');
 
@@ -353,7 +402,6 @@ function makinFilters() {
 }
 
 function clearFilters() {
-    
     // remove filter button
     $('.selected-filters h4').remove();
     var selectors = $('.checkbox-filter input');
@@ -367,7 +415,7 @@ function clearFilters() {
     });
 
     $('.selected-filters .HtmlContent > div').each(function() {
-        $(this).addClass('no-selection')
+        $(this).addClass('no-selection');
     });
 
     // show all items in the grid and reset filter dropdowns
@@ -377,7 +425,6 @@ function clearFilters() {
 }
 
 function removeMe(elem) {
-
     // remove active/checked status from filter checkbox and remove the filter button
     var parent = $(elem).closest('h4'),
         parentClass = $(parent).attr('class');
@@ -400,14 +447,14 @@ function removeMe(elem) {
     // change text to 'Select filter options' and remove 'has-selection' class when no children are selected
     var filterContentParent = $(filterElem).closest('.filter-content'),
         filterLabelParent = $(filterAncestor).find('.filter-label');
-        parentHasSelection = !!($(filterContentParent).find('.is-active').html());
+    parentHasSelection = !!$(filterContentParent).find('.is-active').html();
 
     if (!parentHasSelection) {
         $(filterContentParent).removeClass('has-selection');
         $(filterLabelParent).text('Select filter options');
     }
 
-    if (!!($(parent).find('h4').html())) {
+    if (!!$(parent).find('h4').html()) {
         $(parent).addClass('no-selection');
     }
 
@@ -417,7 +464,6 @@ function removeMe(elem) {
 }
 
 function handleLabelText(labelText, elem, label, parent, text) {
-
     var index = labelText.indexOf(text);
 
     // add label text if the checkbox is active
