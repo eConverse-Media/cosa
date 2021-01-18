@@ -8,12 +8,14 @@
     line-height: 27px;
     position: relative;
 }
+
 .interior h5:after {
     content: " ";
     display: block;
-    border-bottom: 1px solid #f4f4f4; 
+    border-bottom: 1px solid #f4f4f4;
     margin: 25px 0 30px 0;
 }
+
 
 /*** tables ****/
 
@@ -3125,6 +3127,7 @@ td.ProfilePic>a>img {
     display: none;
 }
 
+
 /* .filtered-library.grid div[id*="NameBlock"] > div:nth-child(4)::after {
 	content: '';
 	position: absolute;
@@ -3271,3 +3274,22 @@ a.user-content-hashtag {
 .selected-filters .no-selection {
     display: none;
 }
+
+.dropdown-group .HtmlContent > .row {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-group .HtmlContent .resource-type {
+    order: 1;
+}
+.dropdown-group .HtmlContent .topics {
+    order: 2;
+}
+.dropdown-group .HtmlContent div[class*="serp-framework"] {
+    order: 3;
+}
+.dropdown-group .HtmlContent .states {
+    order: 4;
+}
+
