@@ -9,7 +9,7 @@ $(function() {
 
     $('.library-content.row-wide > .col-md-4').append($('.selected-filters'));
 
-    $('.selector-wrap .search-box .form-control').attr('placeholder', 'Search resources');
+    $('.selector-wrap .search-box .form-control').attr('placeholder', 'Keyword Search');
     $('.filtered-library .content-tags')
         .contents()
         .filter(function() {
@@ -17,6 +17,14 @@ $(function() {
         })
         .wrap('<span></span>');
     $('.filtered-library .content-tags span').remove();
+
+    $('#LibaryEntryCountDiv').insertAfter('.submit-button');
+
+    var entryText = $('#LibaryEntryCountDiv').text();
+    entryText = $.trim(entryText);
+    entryText = entryText.split(' ');
+
+    $('#LibaryEntryCountDiv').text('Displaying ' + entryText[0] + ' of ' + entryText[0] + ' entries');
 
     $('.library-list').each(function() {
         var self = $(this),
@@ -335,8 +343,6 @@ function makinFilters() {
         });
 
         function sortAlphaNum(a, b) {
-            console.log('running');
-
             var aText = $(a).text(),
                 bText = $(b).text(),
                 regexAlpha = /[a-zA-Z*]/g,
@@ -422,6 +428,9 @@ function clearFilters() {
     $('.grid div[id*="ListViewContent"]').isotope({ filter: '*' });
     $('.filter-label').text('Select filter options');
     $('.filter-content').removeClass('has-selection');
+
+    // //reset the entry count
+    resetEntryCount();
 }
 
 function removeMe(elem) {
@@ -499,4 +508,38 @@ function updateFilters() {
     var filterVal = concatFilters(filters);
 
     $('.grid div[id*="ListViewContent"]').isotope({ filter: filterVal });
+    updateEntryCount();
+}
+
+function EntryCount() {
+    var totalEntries = $('#LibaryEntryCountDiv').text();
+    totalEntries = totalEntries.split(' ');
+    totalEntries = totalEntries[3];
+
+    $('#LibaryEntryCountDiv').text('Displaying ' + totalEntries + ' of ' + totalEntries + ' entries');
+}
+
+function updateEntryCount() {
+
+    //Give isotope half a second to change divs to display: none before running
+
+    setTimeout(function() {
+        var entryCount = [];
+
+        $('.library-list').each(function() {
+            if ($(this).css('display') == 'none') {
+                entryCount.push(this);
+            }
+        });
+
+        var totalEntries = $('#LibaryEntryCountDiv').text();
+        totalEntries = $.trim(totalEntries);
+        totalEntries = totalEntries.split(' ');
+        totalEntries = totalEntries[3];
+        totalEntries = parseInt(totalEntries);
+
+        updatedEntryCount = totalEntries - entryCount.length;
+
+        $('#LibaryEntryCountDiv').text('Displaying ' + updatedEntryCount + ' of ' + totalEntries + ' entries');
+    }, 500);
 }

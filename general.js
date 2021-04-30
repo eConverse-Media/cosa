@@ -5,6 +5,7 @@ $(function() {
 
     $('#BreadCrumb').appendTo('#PageTitleH1');
 
+    handleAnchor();
     handleSearch();
     handleCallout();
     handleSupportCTA();
@@ -33,8 +34,43 @@ function openPanel(klass) {
     $('.bg-our-mission .panel' + klass).show();
 }
 
+
+function handleAnchor() {
+    $('.interior #MainCopy_ContentWrapper').append(
+        '<button onclick="topFunction()" id="topButton" title="Go to top">Back to Top<i class="far fa-chevron-up"></i></button>'
+    );
+
+    mybutton = document.getElementById('topButton');
+
+    $('#topButton').on('click', function(e) {
+        e.preventDefault();
+        topFunction();
+    });
+
+    window.onscroll = function() {
+        scrollFunction();
+    };
+}
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        $(mybutton).addClass('display');
+    } else {
+        $(mybutton).removeClass('display');
+    }
+}
+
+function topFunction() {
+    $('html, body').animate({
+            scrollTop: '0'
+        },
+        1000
+    );
+}
+
 function handleSearch() {
     $('.search-bar-top').insertBefore('#MPAuxNav ul.level1');
+    $('#searchColumn .input-group input[id$="SearchTerm"]').attr('placeholder', 'Type search terms here...');
 }
 
 function handleCallout() {
@@ -87,10 +123,19 @@ function userGroupTabs() {
         counter++;
     });
 
-    $('.tabbed-content .nav-tabs > li:first-of-type').addClass('active');
+    $('.tabbed-content .nav-tabs > li:nth-of-type(2)').addClass('active');
 
-    $('.tabbed-content .tab-content > div.tab-pane:first-of-type').addClass('active');
+    $('.tabbed-content .tab-content > div.tab-pane:nth-of-type(2)').addClass('active');
 
+    tabs = $('.tabbed-content .nav li a');
+
+	$(tabs).each(function() {
+		text = $(this).text();
+		if (text == '') {
+			$(this).remove();
+		}
+	});
+    
     $('.tabs ul li').each(function() {
         var communityName = $(this).find('h5');
         var byline = $(this).find('.ByLine');
