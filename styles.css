@@ -77,11 +77,12 @@
 	border-radius: 0;
 	position: relative;
 }
+
 .submit-button em a:hover,
 .submit-button em a:focus {
 	background: #D02030;
 	border-left-color: #333F7A;
-} 
+}
 
 
 /*** tables ****/
@@ -98,23 +99,25 @@ table tr td {
 
 /*** plain table style ***/
 .plain-table tr td {
-    padding: 10px 15px;
-    vertical-align: middle;
-    border: solid;
-    border-width: 1px;
-    background-color: #FFF;
-    border-color: #fff;
+	padding: 10px 15px;
+	vertical-align: middle;
+	border: solid;
+	border-width: 1px;
+	background-color: #FFF;
+	border-color: #fff;
 }
+
 .plain-table th {
-    padding: 10px 15px;
-    vertical-align: middle;
-    color: inherit;
-    background-color: #fff;
-    border: 0px solid #fff;
+	padding: 10px 15px;
+	vertical-align: middle;
+	color: inherit;
+	background-color: #fff;
+	border: 0px solid #fff;
 }
+
 .plain-table tr:nth-child(2n) {
-    border-bottom: 0px solid #fff;
-    background: #FFF;
+	border-bottom: 0px solid #fff;
+	background: #FFF;
 }
 
 
@@ -225,13 +228,14 @@ table tr td {
 
 /*** equal height tile row ***/
 .equal-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
 }
-.equal-row div[class*="section"] > div {
-    height: 100%;
-    margin: 0;
+
+.equal-row div[class*="section"]>div {
+	height: 100%;
+	margin: 0;
 }
 
 
@@ -930,6 +934,7 @@ fieldset[disabled] .btn-primary.active,
 	color: #fff;
 	background: #212d6a;
 	border-color: #212d6a;
+	border-radius: 0;
 }
 
 a[id*="lnkDownloadDoc"]:hover,
@@ -948,6 +953,7 @@ a[id*="lnkDownloadDoc"]:focus,
 .bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary:focus {
 	border-color: transparent;
 	background-color: #0d1850;
+	border-radius: 0
 }
 
 a[id*="backToDiscussions"] {
@@ -2291,6 +2297,10 @@ td.ProfilePic>a>img {
 	margin: 0 -15px;
 }
 
+.upcoming-events .HLLandingControl.HLEventList ul .event-slider {
+	display: flex;
+}
+
 .upcoming-events .HLLandingControl.HLEventList ul li {
 	border: none;
 	margin: 15px;
@@ -2301,6 +2311,7 @@ td.ProfilePic>a>img {
 	display: flex;
 	flex-direction: column;
 	min-height: 350px;
+	width: calc(33% - 30px);
 }
 
 .latest-blogs .HLLandingControl.SearchResults ul li:hover,
@@ -2365,6 +2376,15 @@ td.ProfilePic>a>img {
 
 .upcoming-events .HLLandingControl.HLEventList ul li .event-info {
 	padding: 20px 0;
+}
+
+.upcoming-events .HLLandingControl.HLEventList ul li div[id*="CalendarMain"]>.row.title-row>div:first-of-type {
+	height: 200px;
+	overflow: hidden;
+}
+
+.upcoming-events .HLLandingControl.HLEventList ul li h3 a:hover {
+	color: #fff;
 }
 
 /* Event Slider */
@@ -2499,6 +2519,21 @@ td.ProfilePic>a>img {
 
 .sponsor-logos .HtmlContent img {
 	max-width: 33%;
+}
+
+.sponsor-logos .HtmlContent p {
+	margin-top: 10px;
+	font-weight: 500;
+}
+
+.sponsor-logos.platinum .HtmlContent p {
+	color: #B1B4B5;
+}
+.sponsor-logos.gold .HtmlContent p {
+	color: #EEAC00;
+}
+.sponsor-logos.bronze .HtmlContent p {
+	color: #CB7130;
 }
 
 .our-sponsors .blog-nav .HtmlContent {
@@ -2699,16 +2734,16 @@ td.ProfilePic>a>img {
 
 .footer-newsletter button {
 	font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 19px;
-    background: #d02030;
-    padding: 5px 15px;
-    transition: 0.3s;
-    color: white;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 19px;
+	background: #d02030;
+	padding: 5px 15px;
+	transition: 0.3s;
+	color: white;
+	text-transform: uppercase;
+	text-decoration: none;
+	border: none;
 }
 
 .footer-newsletter input::placeholder {
@@ -3007,7 +3042,8 @@ td.ProfilePic>a>img {
 	margin-bottom: 0;
 }
 
-.library-content .selector-wrap .search-box, .resource-search-bar {
+.library-content .selector-wrap .search-box,
+.resource-search-bar {
 	border-bottom: 1px solid #e8e8e8;
 	padding-bottom: 20px;
 	margin-bottom: 20px;
@@ -3033,7 +3069,8 @@ td.ProfilePic>a>img {
 	display: none;
 }
 
-.selector-wrap .search-box .form-control, input#customSearch {
+.selector-wrap .search-box .form-control,
+input#customSearch {
 	background: #ffffff;
 	border: 1px solid #e5e5e5;
 	border-radius: 0;
@@ -3042,12 +3079,13 @@ td.ProfilePic>a>img {
 }
 
 input#customSearch {
-    width: calc(100% - 39px);
-    height: 34px;
-    padding: 6px 12px;
+	width: calc(100% - 39px);
+	height: 34px;
+	padding: 6px 12px;
 }
 
-.selector-wrap .search-box .input-group-btn .btn, button#customSearch {
+.selector-wrap .search-box .input-group-btn .btn,
+button#customSearch {
 	background: #ffffff;
 	border-radius: 0;
 	border: 1px solid #e5e5e5;
@@ -3055,8 +3093,8 @@ input#customSearch {
 }
 
 button#customSearch {
-    height: 34px;
-    padding: 6px 12px;
+	height: 34px;
+	padding: 6px 12px;
 }
 
 .selector-wrap .search-box .input-group-btn .btn span {
@@ -3414,9 +3452,9 @@ a.user-content-hashtag {
 }
 
 #LibaryEntryCountDiv {
-	   float: right;
-	   color: #1f271b;
-	   font-weight: 700;
+	float: right;
+	color: #1f271b;
+	font-weight: 700;
 }
 
 .filtered-library.grid {
