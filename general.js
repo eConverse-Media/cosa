@@ -127,15 +127,6 @@ function userGroupTabs() {
 
     $('.tabbed-content .tab-content > div.tab-pane:first-of-type').addClass('active');
 
-    tabs = $('.tabbed-content .nav li a');
-
-	$(tabs).each(function() {
-		text = $(this).text();
-		if (text == '') {
-			$(this).remove();
-		}
-	});
-    
     $('.tabs ul li').each(function() {
         var communityName = $(this).find('h5');
         var byline = $(this).find('.ByLine');
@@ -186,9 +177,6 @@ function handleUpcomingEvents() {
         var div = $(this).find('div[id*="CalendarMain"] > .row.title-row > .col-md-12');
         $(div).append(eventDate);
         $(div).append(eventLocation);
-
-        var linkToRegister = $(this).find('div[id*="LinkToRegisterPanel"]');
-        $(linkToRegister).appendTo($(this).find('div[id*="CalendarMain"] > .row.title-row'))
     });
 }
 

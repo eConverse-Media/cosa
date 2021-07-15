@@ -86,31 +86,27 @@ $(function() {
         '<div class="event-slider slick-dotted" />'
     );
 
-    var events = $('.upcoming-events .HLLandingControl.HLEventList .Content ul li').toArray();
+    $('.event-slider').slick({
+        draggable: false,
+        dots: false,
+        arrows: true,
+        infinite: true,
+        autoplay: false,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        prevArrow: '<button type="button" class="prev-arrow slick-arrow" onclick="subtractWidth()"><i class="fal fa-arrow-left"></i></button>',
+        nextArrow: '<button type="button" class="next-arrow slick-arrow" onclick="addWidth()";><i class="fal fa-arrow-right"></i></button>',
+        responsive: [{
+            breakpoint: 769,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }]
+    });
 
-    if (events.length > 3) {
-        $('.event-slider').slick({
-            draggable: false,
-            dots: false,
-            arrows: true,
-            infinite: true,
-            autoplay: false,
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            prevArrow: '<button type="button" class="prev-arrow slick-arrow" onclick="subtractWidth()"><i class="fal fa-arrow-left"></i></button>',
-            nextArrow: '<button type="button" class="next-arrow slick-arrow" onclick="addWidth()";><i class="fal fa-arrow-right"></i></button>',
-            responsive: [{
-                breakpoint: 769,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }]
-        });
-
-        var blogNav = $('<div class="blog-nav"> <div class="HtmlContent"></div></div>');
-        $(blogNav).appendTo('.event-title .HtmlContent');
-    }
+    var blogNav = $('<div class="blog-nav"> <div class="HtmlContent"></div></div>');
+    $(blogNav).appendTo('.event-title .HtmlContent');
 });
 
 function handleSlideCount() {

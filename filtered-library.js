@@ -520,9 +520,6 @@ function EntryCount() {
 }
 
 function updateEntryCount() {
-
-    //Give isotope half a second to change divs to display: none before running
-
     setTimeout(function() {
         var entryCount = [];
 
