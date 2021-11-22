@@ -1,8 +1,4 @@
-$(function() {
-    if ($('.HLWelcome .imgButton').length) {
-        $('body').addClass('logged-in');
-    }
-
+$(function () {
     $('#BreadCrumb').appendTo('#PageTitleH1');
 
     handleAnchor();
@@ -13,7 +9,7 @@ $(function() {
     handleUpcomingEvents();
     handleClickableTiles();
 
-    $('.latest-blogs .SearchResults.HLLandingControl .Content ul li').each(function() {
+    $('.latest-blogs .SearchResults.HLLandingControl .Content ul li').each(function () {
         handleAjaxCall(this);
 
         var label = $(this).find('span.label');
@@ -42,12 +38,12 @@ function handleAnchor() {
 
     mybutton = document.getElementById('topButton');
 
-    $('#topButton').on('click', function(e) {
+    $('#topButton').on('click', function (e) {
         e.preventDefault();
         topFunction();
     });
 
-    window.onscroll = function() {
+    window.onscroll = function () {
         scrollFunction();
     };
 }
@@ -70,6 +66,7 @@ function topFunction() {
 
 function handleSearch() {
     $('.search-bar-top').insertBefore('#MPAuxNav ul.level1');
+    $('.search-bar-top .input-group input[id$="SearchTerm"]').attr('placeholder', 'Search...');
     $('#searchColumn .input-group input[id$="SearchTerm"]').attr('placeholder', 'Type search terms here...');
 }
 
@@ -77,16 +74,24 @@ function handleCallout() {
     $('.callout-box .HtmlContent > *:not(img)').wrapAll('<div class="text-container" />');
     $('.callout-box .HtmlContent img').wrap('<div class="img-container" />');
 
-    var imgContainer = $('.callout-box .img-container');
-    var ImgSrc = $('.callout-box img').attr('src');
+    handleBgImage(
+        ".callout-box .HtmlContent .img-container",
+        ".callout-box .HtmlContent .img-container"
+    );
+
     $('.callout-box img').hide();
-    $(imgContainer).css('background-image', 'url("' + ImgSrc + '")');
 }
 
 function handleSupportCTA() {
     $('.hero-cta img').hide();
     var heroBGSrc = $('.hero-cta img').attr('src');
     $('.hero-cta .img-container').css('background-image', 'url("' + heroBGSrc + '")');
+
+
+    handleBgImage(
+        ".hero-cta .img-container",
+        ".hero-cta .img-container"
+    );
 }
 
 function userGroupTabs() {
@@ -96,7 +101,7 @@ function userGroupTabs() {
 
     var counter = 1;
 
-    $('.tabbed-content .tabs').each(function() {
+    $('.tabbed-content .tabs').each(function () {
         $(this).wrap(
             '<div id="tab-' +
             counter +
@@ -127,7 +132,7 @@ function userGroupTabs() {
 
     $('.tabbed-content .tab-content > div.tab-pane:first-of-type').addClass('active');
 
-    $('.tabs ul li').each(function() {
+    $('.tabs ul li').each(function () {
         var communityName = $(this).find('h5');
         var byline = $(this).find('.ByLine');
 
@@ -135,7 +140,7 @@ function userGroupTabs() {
         $(communityName).appendTo(this);
     });
 
-    $('.announcements .SearchResults.HLLandingControl ul li').each(function() {
+    $('.announcements .SearchResults.HLLandingControl ul li').each(function () {
         var communityName = $(this).find('h5');
         var byline = $(this).find('.ByLine');
 
@@ -143,7 +148,7 @@ function userGroupTabs() {
         $(communityName).appendTo(this);
     });
 
-    $('.community-activity .SearchResults.HLLandingControl ul li').each(function() {
+    $('.community-activity .SearchResults.HLLandingControl ul li').each(function () {
         var communityName = $(this).find('h5');
         var byline = $(this).find('.ByLine');
 
@@ -151,6 +156,7 @@ function userGroupTabs() {
         $(communityName).appendTo(this);
     });
 }
+
 
 function handleUpcomingEvents() {
     $('.upcoming-events .HLLandingControl.HLEventList ul li').each(function() {
@@ -163,6 +169,7 @@ function handleUpcomingEvents() {
         $(eventImage).hide();
         var eventImageSrc = $(eventImage).attr('src');
         $(this).find('.img-container').css('background-image', 'url("' + eventImageSrc + '")');
+        
 
         /* month 3 letters */
         var month = $(this).find('.date-block .calendar-month span').text();
@@ -181,7 +188,7 @@ function handleUpcomingEvents() {
 }
 
 function handleClickableTiles() {
-    $('.make-clickable').each(function() {
+    $('.make-clickable').each(function () {
         var self = $(this),
             link = $(self).find('a'),
             href = $(link).attr('href');

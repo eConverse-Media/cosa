@@ -1,18 +1,11 @@
 $(function() {
     // Set background images for any content item that has the bg-image class
-    $('.bg-image').each(function() {
-        handleBgImage($(this), $(this));
-        $(this).find('img').hide();
-    });
-
     $('.main-slide').each(function() {
         $(this).find('.HtmlContent > *:not(img)').wrapAll('<div class="text-container" />');
         $(this).find('.HtmlContent img').wrap('<div class="img-container" />');
 
-        var imgContainer = $('.img-container');
-        var ImgSrc = $(this).find('img').attr('src');
         $(this).find('img').hide();
-        $(this).find(imgContainer).css('background-image', 'url("' + ImgSrc + '")');
+        handleBgImage($(this), $(this).find('.img-container'));
     });
 
     /*** Main Slider ***/

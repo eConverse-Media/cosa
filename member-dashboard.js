@@ -75,8 +75,6 @@ function checkForDesktop() {
 
 function handleAnnouncements() {
     $('.member-dashboard .second-column .HLRecentBlogs ul li').each(function() {
-        handleAjaxCall(this);
-
         var text = $(this).find('.text-container');
         $(this).find('.ByLine').appendTo(text);
         $(text).prependTo(this);
