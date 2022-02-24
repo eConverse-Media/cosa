@@ -1,3 +1,20 @@
+function handleDropdownValue(dropdown) {
+    var url = window.location.href,
+        opts = dropdown[0].options;
+
+    folder = url.substring(url.indexOf('?folder=') + 8, url.length);
+
+    if (!folder) {
+        folder = 'all';
+    }
+
+    for (var i = 0; i < opts.length; i++) {
+        if (opts[i].value == folder) {
+            opts[i].selected = true;
+        }
+    }
+}
+
 function handleLibraryFilter(val) {
 
     var url = window.location.href;
@@ -8,11 +25,13 @@ function handleLibraryFilter(val) {
     } else if (val != 'all') {
         url = url + '?folder=' + val;
     }
-    console.log('>>>>>>>> ', url);
+    window.location = url;
 }
 
 $(function () {
     var dropdown = $('#resource-type');
+
+    handleDropdownValue(dropdown);
 
     $(dropdown).on('change', function () {
         var val = this.value;
