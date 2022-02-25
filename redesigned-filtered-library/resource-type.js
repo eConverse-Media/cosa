@@ -2,7 +2,7 @@ function handleDropdownValue(dropdown) {
     var url = window.location.href,
         opts = dropdown[0].options;
 
-    folder = url.substring(url.indexOf('?folder=') + 8, url.length);
+    var folder = url.substring(url.indexOf('?folder=') + 8, url.length);
 
     if (!folder) {
         folder = 'all';
