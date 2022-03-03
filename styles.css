@@ -486,16 +486,10 @@ body {
 
 .bg-callout {
 	background: rgba(215, 215, 215, 0.2);
-	padding: 20px calc(50% - 585px);
 }
 
 .bg-our-sponsors {
 	background: rgba(215, 215, 215, 0.2);
-	padding: 50px calc(50% - 600px) 66px;
-}
-
-.bg-our-mission {
-	padding: 70px calc(50% - 600px) 78px;
 }
 
 .bg-latest-activity {
@@ -512,7 +506,6 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	position: relative;
-	padding: 92px calc(50% - 585px) 104px;
 	z-index: 1;
 }
 
@@ -532,7 +525,6 @@ body {
 }
 
 .bg-blogs {
-	padding: 60px calc(50% - 585px);
 	background: linear-gradient(81.66deg, rgba(16, 25, 75, 0.96) 4.61%, #27326b 71.58%);
 }
 
@@ -542,7 +534,6 @@ body {
 	background-position: center;
 	background-repeat: no-repeat;
 	position: relative;
-	padding: 52px calc(50% - 585px) 88px;
 	z-index: 1;
 }
 
@@ -573,18 +564,8 @@ body {
 	padding-bottom: 64px;
 }
 
-/* show/hide rows */
-
-.home:not(.logged-in) .bg-callout,
-.home:not(.logged-in) .bg-upcoming-events,
-.home:not(.logged-in) .bg-latest-activity,
-.home:not(.logged-in) .bg-community-activity,
-.logged-in .tabbed-content,
-.logged-in .bg-our-mission,
-.logged-in .bg-support-cosa,
-.logged-in .bg-blogs,
-.logged-in .bg-our-sponsors,
-.logged-in .tabbed-content ul.nav.nav-tabs {
+body:not(.logged-in) .bg-callout.tabbed-content,
+.logged-in .row.row-wide.clearfix.tabbed-content {
 	display: none;
 }
 
@@ -1375,6 +1356,7 @@ td.ProfilePic>a>img {
 	transition: 0.3s;
 }
 
+.search-bar-top .form-control::placeholder,
 #searchColumn .form-control::placeholder {
 	font-style: normal;
 }
@@ -1781,6 +1763,10 @@ td.ProfilePic>a>img {
 	color: #fff;
 }
 
+.callout-box a:hover {
+	color: #fff;
+}
+
 .callout-box {
 	padding: 20px;
 	color: #fff;
@@ -1790,6 +1776,7 @@ td.ProfilePic>a>img {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding: 20px calc(50% - 585px) 0;
 }
 
 .callout-box .text-container,
@@ -1817,6 +1804,7 @@ td.ProfilePic>a>img {
 	line-height: 42px;
 	margin: 0;
 	margin-bottom: 10px;
+	padding: 0;
 }
 
 .home .callout-box .text-container::before {
@@ -1870,7 +1858,7 @@ td.ProfilePic>a>img {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	padding-bottom: 30px;
+	padding-top: 30px;
 }
 
 .our-mission .HtmlContent p:first-of-type {
@@ -1936,6 +1924,10 @@ td.ProfilePic>a>img {
 
 /* Latest Blogs */
 
+.latest-blogs {
+	padding-top: 60px;
+}
+
 .latest-blogs * {
 	color: #fff;
 }
@@ -1973,6 +1965,10 @@ td.ProfilePic>a>img {
 	padding-left: calc(50% - 600px) !important;
 	margin-left: 0;
 	margin-right: 0;
+}
+
+.latest-blogs .SearchResults.HLLandingControl .slick-slider {
+	padding-bottom: 60px;
 }
 
 .latest-blogs .SearchResults.HLLandingControl .slick-track {
@@ -2048,7 +2044,7 @@ td.ProfilePic>a>img {
 
 .latest-blogs .SearchResults.HLLandingControl div[id*='MoreLink'] {
 	position: absolute;
-	top: 200px;
+	top: 280px;
 	left: 20px;
 	z-index: 5;
 }
@@ -2112,7 +2108,7 @@ td.ProfilePic>a>img {
 
 .latest-blogs .blog-nav {
 	position: absolute;
-	left: -270px;
+	left: -290px;
 	top: 190px;
 }
 
@@ -2133,11 +2129,11 @@ td.ProfilePic>a>img {
 }
 
 .blog-slider .slick-arrow.prev-arrow {
-	left: -270px;
+	left: -290px;
 }
 
 .blog-slider .slick-arrow.next-arrow {
-	left: -230px;
+	left: -240px;
 }
 
 /* Latest Activity - Nav Tabs */
@@ -2266,6 +2262,7 @@ td.ProfilePic>a>img {
 
 .video {
 	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 /* Twitter */
@@ -2307,7 +2304,7 @@ td.ProfilePic>a>img {
 }
 
 .event-title {
-	padding: 0 20px;
+	padding: 52px calc(50% - 585px) 0;
 }
 
 .event-title .HtmlContent p:first-of-type {
@@ -2324,6 +2321,10 @@ td.ProfilePic>a>img {
 
 .upcoming-events .HLLandingControl.HLEventList ul .event-slider {
 	display: flex;
+}
+
+.upcoming-events .HLLandingControl.HLEventList .Content {
+	padding: 0 calc(50% - 585px) 58px;
 }
 
 .upcoming-events .HLLandingControl.HLEventList ul li {
@@ -2517,9 +2518,14 @@ td.ProfilePic>a>img {
 .cta-tile.make-buttons h2 {
 	margin-top: 8px;
 	margin-bottom: 10px;
+	padding: 0;
 }
 
 /* Our Sponsors */
+
+.our-sponsors {
+	padding: 50px calc(50% - 600px) 66px;
+}
 
 .our-sponsors>.HtmlContent {
 	display: flex;
@@ -2613,6 +2619,7 @@ td.ProfilePic>a>img {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding: 92px calc(50% - 585px) 104px;
 }
 
 .support-cta .HtmlContent p:first-of-type {
@@ -2880,7 +2887,9 @@ td.ProfilePic>a>img {
 
 /* HL buttons */
 
-.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus {
 	background-color: #212d6a;
 }
 
