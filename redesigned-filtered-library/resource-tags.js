@@ -1,22 +1,31 @@
-function handleTagDropdownValue(dropdown) {
+function handleTagDropdownValue(dropdowns) {
     var url = window.location.href,
-        opts = dropdown[0].options,
         tag;
 
     if (url.indexOf('tags') > -1) {
-        tag = url.substring(url.indexOf('tags%3A') + 10, url.indexOf('&execute') - 3);
+        if (url.indexOf('tags%3A') > -1) {
+            tag = url.substring(url.indexOf('tags') + 10, url.indexOf('&execute') - 3);
+        } else {
+            tag = url.substring(url.indexOf('tags') + 8, url.indexOf('&execute') - 3);
+        }
 
     }
     
     if (!tag) {
         tag = 'all';
     }
-    
-    for (var i = 0; i < opts.length; i++) {
-        if (opts[i].value == tag) {
-            opts[i].selected = true;
+
+    for (var j = 0; j < dropdowns.length; j++) {
+        
+        var opts = dropdowns[j].options;
+        
+        for (var i = 0; i < opts.length; i++) {
+            if (opts[i].value == tag) {
+                opts[i].selected = true;
+            }
         }
     }
+    
 
 
 }
@@ -27,12 +36,10 @@ function handleLibraryTag(val) {
 
     url = url.substring(0, url.indexOf('research-resources') + 19);
 
-    //NOTE this needs to change after launch
     if (val == 'all') {
-        url += 'resources-overview-test/test-library-outline';
+        url += 'resources-overview/';
     } else {
-        //NOTE this needs to change after launch
-        url += 'resources-overview-test/resource-library-search-results-test?s=tags%3A';
+        url += 'resources-overview/resource-library-search-results?s=tags%3A';
     
         url += '%22' + val + '%22';
     
@@ -43,13 +50,16 @@ function handleLibraryTag(val) {
 }
 
 $(function () {
-    var dropdown = $('#topics');
+    var dropdowns = $('.tag-dropdown').toArray();
 
-    handleTagDropdownValue(dropdown);
+    handleTagDropdownValue(dropdowns);
+    for (var i = 0; i < dropdowns.length; i++) {
+    
+        $(dropdowns[i]).on('change', function () {
+            var val = this.value;
+    
+            handleLibraryTag(val);
+        });
+    }
 
-    $(dropdown).on('change', function () {
-        var val = this.value;
-
-        handleLibraryTag(val);
-    });
 });
