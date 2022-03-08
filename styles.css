@@ -3530,6 +3530,35 @@ a.user-content-hashtag {
 
 .resource-dropdowns > .col-md-12 {
 	display: flex;
+	flex-wrap: wrap;
+	margin: -5px;
+}
+.resource-dropdown {
+	margin: 5px;
+	position: relative;
+}
+.resource-dropdown select {
+	appearance: none;
+	border: 1px solid #E5E5E5;
+	background: transparent;
+	border-radius: 1px;
+	padding: 7px 20px 7px 10px;
+	color: #000;
+	font-size: 14px;
+	line-height: 20px;
+	z-index: 10;
+	width: 100%;
+}
+.resource-dropdown::after {
+	font-family: CoSA;
+	content: '\f014';
+	color: #666;
+	z-index: -1;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 5px;
 }
 .resource-library .bootstrap-4 .btn-success {
 	background-color: #273469;
@@ -3665,5 +3694,8 @@ a.user-content-hashtag {
 @media (max-width: 500px) {
 	.submit-resource .HtmlContent {
 		padding: 30px;
+	}
+	.resource-dropdown {
+		flex-basis: 100%;
 	}
 }

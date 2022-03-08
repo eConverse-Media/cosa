@@ -5,8 +5,10 @@ function handleTagDropdownValue(dropdowns) {
     if (url.indexOf('tags') > -1) {
         if (url.indexOf('tags%3A') > -1) {
             tag = url.substring(url.indexOf('tags') + 10, url.indexOf('&execute') - 3);
-        } else {
+        } else if (url.indexOf('tags:%2' > -1)) {
             tag = url.substring(url.indexOf('tags') + 8, url.indexOf('&execute') - 3);
+        } else {
+
         }
 
     }
