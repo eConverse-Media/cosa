@@ -1,21 +1,31 @@
 function handleTagDropdownValue(dropdowns) {
     var url = window.location.href,
         tag,
-        hasColonEncoding,
-        hasOpeningQuotationEncoding;
+        hasColonEncoding = !!(url.indexOf('tags%3A') > -1),
+        hasOpeningQuotationEncoding = !!(url.indexOf('tags%3A%2') > -1 || url.indexOf('tags:%2') > -1),
+        hasClosingQuotationEncoding = !!(url.indexOf('%22&') > -1),
+        firstUrlPoint,
+        secondUrlPoint;
 
     if (url.indexOf('tags') > -1) {
-        if (url.indexOf('tags%3A') > -1) {
-            tag = url.substring(url.indexOf('tags') + 10, url.indexOf('&execute') - 3);
-        } else if (url.indexOf('tags:%2' > -1)) {
-            tag = url.substring(url.indexOf('tags') + 8, url.indexOf('&execute') - 3);
-        } else {
 
+        if (hasColonEncoding && hasOpeningQuotationEncoding) {
+            firstUrlPoint = 10;
+        } else if (hasColonEncoding || hasOpeningQuotationEncoding) {
+            firstUrlPoint = 8;
+        } else {
+            firstUrlPoint = 6;
+        }
+    
+        if (hasClosingQuotationEncoding) {
+            secondUrlPoint = 3;
+        } else {
+            secondUrlPoint = 1;
         }
 
-    }
-    
-    if (!tag) {
+        tag = url.substring(url.indexOf('tags') + firstUrlPoint, url.indexOf('&execute') - secondUrlPoint);
+
+    } else {
         tag = 'all';
     }
 

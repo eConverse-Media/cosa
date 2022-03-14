@@ -19,10 +19,9 @@ function handleLibraryFilter(val) {
 
     var url = window.location.href;
 
-    if (url.indexOf('?') > -1) {
-        url = url.substring(0, url.indexOf('?'));
+    url = url.substring(0, url.indexOf('resources-overview') + 18);
 
-    } else if (val != 'all') {
+    if (val != 'all') {
         url = url + '?folder=' + val;
     }
     window.location = url;
