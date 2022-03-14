@@ -1,6 +1,8 @@
 function handleTagDropdownValue(dropdowns) {
     var url = window.location.href,
-        tag;
+        tag,
+        hasColonEncoding,
+        hasOpeningQuotationEncoding;
 
     if (url.indexOf('tags') > -1) {
         if (url.indexOf('tags%3A') > -1) {
