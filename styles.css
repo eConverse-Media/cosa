@@ -3676,6 +3676,12 @@ a.user-content-hashtag {
 .custom-resource-search button:focus {
 	background: #ac0714;
 }
+.resource-library-search-results .refine-by-facets .facet-container {
+	display: none;
+}
+.resource-library-search-results .refine-by-facets .facet-container[data-facet-field="tags"] {
+	display: block;
+}
 
 /************ responsive ************/
 
