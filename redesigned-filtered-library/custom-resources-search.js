@@ -5,9 +5,9 @@ function searchResources() {
 
     url = url.substring(0, url.indexOf('research-resources') + 19);
 
-    url += 'resources-overview/resource-library-search-results?s=';
+    url += 'resource-center/resource-library-search-results?s=';
 
-    url += '%22' + searchTerm + '%22';
+    url += '"' + searchTerm + '"';
     
     url += '&executesearch=true&cs=LibraryEntries';
 

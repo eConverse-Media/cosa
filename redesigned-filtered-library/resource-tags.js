@@ -51,9 +51,9 @@ function handleLibraryTag(val) {
     url = url.substring(0, url.indexOf('research-resources') + 19);
 
     if (val == 'all') {
-        url += 'resources-overview/';
+        url += 'resource-center/';
     } else {
-        url += 'resources-overview/resource-library-search-results?s=tags%3A';
+        url += 'resource-center/resource-library-search-results?s=tags%3A';
     
         url += '%22' + val + '%22';
     

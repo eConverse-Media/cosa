@@ -19,7 +19,7 @@ function handleLibraryFilter(val) {
 
     var url = window.location.href;
 
-    url = url.substring(0, url.indexOf('resources-overview') + 18);
+    url = url.substring(0, url.indexOf('resource-center') + 18);
 
     if (val != 'all') {
         url = url + '?folder=' + val;
