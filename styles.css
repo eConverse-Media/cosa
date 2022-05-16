@@ -3676,7 +3676,9 @@ a.user-content-hashtag {
 .custom-resource-search button:focus {
 	background: #ac0714;
 }
-.resource-library-search-results .refine-by-facets .facet-container {
+.resource-library-search-results .refine-by-facets .facet-container,
+.resource-library-search-results .facetCategory,
+.resource-library-search-results .any-content-div {
 	display: none;
 }
 .resource-library-search-results .refine-by-facets .facet-container[data-facet-field="tags"] {

@@ -11,6 +11,8 @@ function searchResources() {
     
     url += '&executesearch=true&cs=LibraryEntries';
 
+    url += '&cs=LibraryEntries&rf=%5EKey05%3A96382fdb-9e15-4240-a0e6-c7feb82c26b8%5E&expanded-categories=tags';
+
     window.location = url;
         
 }
